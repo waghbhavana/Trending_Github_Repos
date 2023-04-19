@@ -5,7 +5,6 @@ import com.example.trending_github_repos.di.ApplicationComponent
 import com.example.trending_github_repos.di.DaggerApplicationComponent
 import dagger.hilt.android.HiltAndroidApp
 
-//import com.example.trending_github_repos.di.DaggerApplicationComponent
 @HiltAndroidApp
 class RepositoriesApplication : Application() {
 

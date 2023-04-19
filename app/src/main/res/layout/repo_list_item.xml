@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="item"
+            type="com.example.trending_github_repos.models.Item"/>
+    </data>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,26 +26,19 @@
             android:layout_marginStart="@dimen/_8sdp"/>
 
         <TextView
-            android:id="@+id/txtAuthor"
-            android:text="author"
+            android:id="@+id/txtName"
+            android:text="Repo Name"
             android:fontFamily="@font/gt_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginStart="@dimen/_4sdp"/>
-
+            android:layout_marginHorizontal="@dimen/_8sdp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtName"
-        android:text="Repo Name"
-        android:fontFamily="@font/gt_medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_8sdp"/>
+
 
     <TextView
         android:id="@+id/txtDescription"
@@ -47,12 +46,13 @@
         android:fontFamily="@font/gt_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginHorizontal="@dimen/_8sdp"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/_8sdp">
 
         <LinearLayout
@@ -76,6 +76,18 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="Language"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/txtFork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:gravity="center"
+            android:fontFamily="@font/gt_medium"
+            android:text="100"
+            app:drawableTint="@color/yellow"
+            app:drawableStartCompat="@drawable/ic_baseline_fork_right_24" />
 
         <TextView
             android:id="@+id/txtStart"
@@ -88,7 +100,7 @@
             android:text="100"
             app:drawableTint="@color/yellow"
             app:drawableStartCompat="@drawable/ic_baseline_star_24" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -97,3 +109,4 @@
         android:background="@color/black"/>
 
 </LinearLayout>
+</layout>

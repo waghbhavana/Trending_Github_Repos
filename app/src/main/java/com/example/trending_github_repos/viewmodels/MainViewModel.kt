@@ -7,8 +7,10 @@ import com.example.trending_github_repos.NetworkResult
 import com.example.trending_github_repos.models.RepositoriesApiResponse
 import com.example.trending_github_repos.repository.RepoRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainViewModel(private val repoRepository: RepoRepository): ViewModel() {
+
 
     val reposLiveData : LiveData<NetworkResult<RepositoriesApiResponse>>
     get() = repoRepository.repos
@@ -16,4 +18,5 @@ class MainViewModel(private val repoRepository: RepoRepository): ViewModel() {
     init {
         viewModelScope.launch { repoRepository.getRepos() }
     }
+
 }

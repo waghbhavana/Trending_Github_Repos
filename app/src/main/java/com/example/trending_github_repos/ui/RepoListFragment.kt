@@ -1,50 +1,65 @@
 package com.example.trending_github_repos.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.trending_github_repos.MainActivity
+import com.example.trending_github_repos.NetworkResult
 import com.example.trending_github_repos.R
+import com.example.trending_github_repos.RepositoriesApplication
+import com.example.trending_github_repos.databinding.FragmentRepoListBinding
+import com.example.trending_github_repos.viewmodels.MainViewModel
+import com.example.trending_github_repos.viewmodels.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class RepoListFragment : Fragment(R.layout.fragment_repo_list) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RepoListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RepoListFragment : Fragment() {
+   // private val viewModel: MainViewModel by viewModels()
+    lateinit var mainViewModel:MainViewModel
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModelFactory
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentRepoListBinding.bind(view)
+        val repoListAdapter = RepoListAdapter()
+       // (application as RepositoriesApplication).applicationComponent.inject(this)
+        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repo_list, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RepoListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RepoListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        binding.apply {
+            repoRecyclerView.apply {
+                adapter = repoListAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
             }
+        }
+
+        mainViewModel.reposLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    Log.d("RESULT", "Success, repos ${it.data?.items}")
+                    repoListAdapter.submitList(it.data?.items)
+                }
+                is NetworkResult.Error -> {
+                    Log.d("RESULT", "Error,repos ${it.message}")
+                }
+                is NetworkResult.Loading -> {}
+            }
+        }
+
+        //  (application as RepositoriesApplication).applicationComponent.inject(this)
+     //   mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
+
+
+
     }
+
 }

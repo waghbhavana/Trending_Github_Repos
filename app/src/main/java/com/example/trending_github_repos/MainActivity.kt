@@ -6,30 +6,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.trending_github_repos.viewmodels.MainViewModel
 import com.example.trending_github_repos.viewmodels.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    lateinit var mainViewModel:MainViewModel
-    @Inject
-    lateinit var mainViewModelFactory: MainViewModelFactory
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        (application as RepositoriesApplication).applicationComponent.inject(this)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
-
-        mainViewModel.reposLiveData.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    Log.d("RESULT", "Success, repos ${it.data?.items}")
-                }
-                is NetworkResult.Error -> {
-                    Log.d("RESULT", "Error,repos ${it.message}")
-                }
-                is NetworkResult.Loading -> {}
-            }
-        }
     }
 }
