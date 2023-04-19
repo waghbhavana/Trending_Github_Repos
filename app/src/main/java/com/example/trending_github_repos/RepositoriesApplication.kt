@@ -3,13 +3,16 @@ package com.example.trending_github_repos
 import android.app.Application
 import com.example.trending_github_repos.di.ApplicationComponent
 import com.example.trending_github_repos.di.DaggerApplicationComponent
+import dagger.hilt.android.HiltAndroidApp
 
+//import com.example.trending_github_repos.di.DaggerApplicationComponent
+@HiltAndroidApp
 class RepositoriesApplication : Application() {
 
     lateinit var applicationComponent : ApplicationComponent
     override fun onCreate() {
         super.onCreate()
-      applicationComponent= DaggerApplicationComponent.builder().build()
+  this.applicationComponent = DaggerApplicationComponent.builder().build()
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.trending_github_repos.Models
+package com.example.trending_github_repos.models
 
 data class RepositoriesApiResponse(
     val incomplete_results: Boolean,
