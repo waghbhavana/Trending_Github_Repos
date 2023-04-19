@@ -18,10 +18,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (application as RepositoriesApplication).applicationComponent.inject(this)
-        mainViewModel= ViewModelProvider(this,mainViewModelFactory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
 
         mainViewModel.reposLiveData.observe(this) {
-            Log.d("RESULT", "repos" + it.incomplete_results)
+            when (it) {
+                is NetworkResult.Success -> {
+                    Log.d("RESULT", "Success, repos ${it.data?.items}")
+                }
+                is NetworkResult.Error -> {
+                    Log.d("RESULT", "Error,repos ${it.message}")
+                }
+                is NetworkResult.Loading -> {}
+            }
         }
     }
 }
