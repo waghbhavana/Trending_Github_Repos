@@ -31,7 +31,8 @@ class RepoListFragment : Fragment(R.layout.fragment_repo_list) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentRepoListBinding.bind(view)
         val repoListAdapter = RepoListAdapter()
-       // (application as RepositoriesApplication).applicationComponent.inject(this)
+
+
         mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
 
         binding.apply {
@@ -40,6 +41,7 @@ class RepoListFragment : Fragment(R.layout.fragment_repo_list) {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
+
         }
 
         mainViewModel.reposLiveData.observe(viewLifecycleOwner) {
@@ -54,10 +56,6 @@ class RepoListFragment : Fragment(R.layout.fragment_repo_list) {
                 is NetworkResult.Loading -> {}
             }
         }
-
-        //  (application as RepositoriesApplication).applicationComponent.inject(this)
-     //   mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
-
 
 
     }

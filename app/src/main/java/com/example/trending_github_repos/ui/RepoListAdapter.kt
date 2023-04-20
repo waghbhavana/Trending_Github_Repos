@@ -1,5 +1,6 @@
 package com.example.trending_github_repos.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trending_github_repos.databinding.RepoListItemBinding
 import com.example.trending_github_repos.models.Item
+import com.squareup.picasso.Picasso
 
 class RepoListAdapter : ListAdapter<Item,RepoListAdapter.RepoViewHolder> (DiffCallback()){
 
@@ -28,7 +30,7 @@ class RepoListAdapter : ListAdapter<Item,RepoListAdapter.RepoViewHolder> (DiffCa
                 txtLang.text=item.language
                 txtStart.text=item.stargazers_count.toString()
                 txtFork.text=item.forks_count.toString()
-               // Glide.with(this).load("http://i.imgur.com/DvpvklR.png").into(imgRepo);
+               // Picasso.with(root.context).load(item.owner.avatar_url).into(imgRepo)
 
             }
         }
@@ -39,8 +41,9 @@ class RepoListAdapter : ListAdapter<Item,RepoListAdapter.RepoViewHolder> (DiffCa
             return oldItem== newItem
         }
 
+        @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-            return oldItem== newItem
+            return oldItem == newItem
         }
 
     }
