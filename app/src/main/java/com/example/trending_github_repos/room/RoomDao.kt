@@ -12,6 +12,8 @@ interface RoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRepoItems(repoList:List<Item>)
 
-    @Query("SELECT * FROM item")
-    suspend fun getRepoItems(): List<Item>
+    @Query("SELECT * FROM item WHERE full_name || language LIKE '%' || :searchQuery || '%'")
+    suspend fun getRepoItems(searchQuery:String): List<Item>
+
+
 }

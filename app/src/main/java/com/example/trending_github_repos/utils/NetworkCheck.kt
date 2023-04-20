@@ -1,36 +1,17 @@
-package com.example.trending_github_repos
+package com.example.trending_github_repos.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
-import com.example.trending_github_repos.viewmodels.MainViewModel
-import com.example.trending_github_repos.viewmodels.MainViewModelFactory
-import dagger.hilt.android.AndroidEntryPoint
-import java.net.URL
-import javax.inject.Inject
-import javax.net.ssl.HttpsURLConnection
-
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        //   (application as RepositoriesApplication).applicationComponent.inject(this)
-
-           // val deviceOnline = isDeviceOnline(this.applicationContext)
-           /// val internetAvailable = isInternetAvailable()
-          //  Log.d("tagLog", "isdeviceOnline- $deviceOnline")
-           // Log.d("tagLog", "isinternetAvailable- $internetAvailable")
+import androidx.appcompat.app.AppCompatActivity
 
 
-    }
-        private fun isDeviceOnline(context: Context): Boolean {
-            val connManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+class NetworkCheck {
+    companion object{
+         fun isDeviceOnline(context: Context): Boolean {
+            val connManager = context.getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val networkCapabilities = connManager.getNetworkCapabilities(connManager.activeNetwork)
                 if (networkCapabilities == null) {
@@ -55,7 +36,5 @@ class MainActivity : AppCompatActivity() {
                 return activeNetwork?.isConnectedOrConnecting == true && activeNetwork.isAvailable
             }
         }
-
-
-
+    }
 }

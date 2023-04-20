@@ -19,7 +19,8 @@ public class Item(
     val languages_url: String?,
     @Embedded(prefix = "owner")
     val owner: Owner,
-    val stargazers_count: Int
+    val stargazers_count: Int,
+    val isSelected: Int=0
 ): Parcelable { constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
@@ -28,7 +29,9 @@ public class Item(
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Owner::class.java.classLoader)!!,
+        parcel.readInt(),
         parcel.readInt()
+
     )
     override fun describeContents(): Int {
         return 0
@@ -43,6 +46,7 @@ public class Item(
         dest.writeParcelable(owner, flags)
         dest.writeString(this.languages_url)
         dest.writeValue(this.stargazers_count)
+        dest.writeValue(this.isSelected)
     }
 
     companion object CREATOR : Parcelable.Creator<Item> {

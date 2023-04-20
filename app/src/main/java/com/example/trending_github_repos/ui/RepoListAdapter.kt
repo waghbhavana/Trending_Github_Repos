@@ -1,6 +1,7 @@
 package com.example.trending_github_repos.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -30,7 +31,10 @@ class RepoListAdapter : ListAdapter<Item,RepoListAdapter.RepoViewHolder> (DiffCa
                 txtLang.text=item.language
                 txtStart.text=item.stargazers_count.toString()
                 txtFork.text=item.forks_count.toString()
-               // Picasso.with(root.context).load(item.owner.avatar_url).into(imgRepo)
+                Picasso.with(root.context).load(item.owner.avatar_url).into(imgRepo)
+//                if(item.isSelected==0){
+//                    binding.itemLayout.setBackgroundColor(Color.GRAY)
+//                }
 
             }
         }
