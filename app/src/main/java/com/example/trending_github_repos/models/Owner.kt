@@ -9,7 +9,7 @@ data class Owner(
     val avatar_url: String?,
     val id: Int,
     val node_id: String?,
-) :Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readInt(),

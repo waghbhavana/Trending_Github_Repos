@@ -24,7 +24,18 @@ class MainViewModel(private val repoRepository: RepoRepository): ViewModel() {
     }
     fun searchNameChanged(searchQuery:String){
         viewModelScope.launch{
-            repoRepository.getReposFromDB(searchQuery)
+            repoRepository.getRepoItemsBySearch(searchQuery)
+        }
+    }
+    fun getReposFromDB(){
+        viewModelScope.launch{
+            repoRepository.getReposFromDB()
+        }
+    }
+
+    fun updateSelectedItem(id: Int) {
+        viewModelScope.launch {
+            repoRepository.getUpdatedRepo(id)
         }
     }
 }

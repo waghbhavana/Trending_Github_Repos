@@ -20,8 +20,9 @@ public class Item(
     @Embedded(prefix = "owner")
     val owner: Owner,
     val stargazers_count: Int,
-    val isSelected: Int=0
-): Parcelable { constructor(parcel: Parcel) : this(
+    val isSelected: Int = 0
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
@@ -33,6 +34,7 @@ public class Item(
         parcel.readInt()
 
     )
+
     override fun describeContents(): Int {
         return 0
     }

@@ -28,6 +28,7 @@ class RepoRepository @Inject constructor(
 
 
     suspend fun getRepos() {
+        _repos.postValue(NetworkResult.Loading())
         if (NetworkCheck.isDeviceOnline(context)) {
 
             val result = repositoriesApi.getRepositories(
@@ -46,14 +47,30 @@ class RepoRepository @Inject constructor(
                 _repos.postValue(NetworkResult.Error("Something went wrong"))
             }
         } else {
-                getReposFromDB("")
+            getReposFromDB()
         }
     }
 
-    suspend fun getReposFromDB(searchQuery:String) {
-            val list = roomDao.getRepoItems(searchQuery)
+    suspend fun getRepoItemsBySearch(searchQuery: String) {
+        val list = roomDao.getRepoItemsBySearch(searchQuery)
+        val repositoriesApiResponse = RepositoriesApiResponse(list, list.size)
+        _repos.postValue(NetworkResult.Success(repositoriesApiResponse))
+    }
+
+     suspend fun getReposFromDB() {
+        val list = roomDao.getRepoItems()
+        if (list.isNotEmpty()) {
             val repositoriesApiResponse = RepositoriesApiResponse(list, list.size)
             _repos.postValue(NetworkResult.Success(repositoriesApiResponse))
+        } else {
+            _repos.postValue(NetworkResult.Error("Something went wrong"))
         }
+
+    }
+
+    suspend fun getUpdatedRepo(id: Int) {
+        roomDao.getUpdatedRepo(id)
+        getReposFromDB()
+    }
 
 }

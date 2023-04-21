@@ -18,28 +18,29 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit():Retrofit{
+    fun providesRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(
-            OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    val url = chain
-                        .request()
-                        .url()
-                        .newBuilder()
-                        .addQueryParameter("q", Constants.QUERY_API)
-                        .build()
-                    chain.proceed(chain.request().newBuilder().url(url).build())
-                }
-                .build()
-        )
+                OkHttpClient.Builder()
+                    .addInterceptor { chain ->
+                        val url = chain
+                            .request()
+                            .url()
+                            .newBuilder()
+                            .addQueryParameter("q", Constants.QUERY_API)
+                            .addQueryParameter("per_page", Constants.PAGE_MAX_SIZE)
+                            .build()
+                        chain.proceed(chain.request().newBuilder().url(url).build())
+                    }
+                    .build()
+            )
             .build()
     }
 
     @Singleton
     @Provides
-    fun providesRepositoriesApi(retrofit: Retrofit):RepositoriesApi{
+    fun providesRepositoriesApi(retrofit: Retrofit): RepositoriesApi {
         return retrofit.create(RepositoriesApi::class.java)
     }
 }

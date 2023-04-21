@@ -8,6 +8,10 @@ import retrofit2.http.Query
 interface RepositoriesApi {
 
     @GET("search/repositories")
-    suspend fun getRepositories(@Query("sort") sort: String, @Query("order") order: String, @Query("since") since:String)
-    :Response<RepositoriesApiResponse>
+    suspend fun getRepositories(
+        @Query("sort") sort: String,
+        @Query("order") order: String,
+        @Query("since") since: String
+    )
+            : Response<RepositoriesApiResponse>
 }
